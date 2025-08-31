@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block main %}
+<div>
+  <table border="1">
+    <tr>
+      <th>NAME</th>
+      <th>NO HP</th>
+      <th>EMAIL</th>
+      <th>ACTION</th>
+    </tr>
+    {% if not contacts %}
+    <tr>
+      <td colspan="4">BELUM ADA DATA</td>
+    </tr>
+    {% else %} {% for contact in contacts %}
+    <tr>
+      <td>{{contact.name}}</td>
+      <td>{{contact.no_hp}}</td>
+      <td>{{contact.email}}</td>
+      <td>
+        <a href="{{url_for('main.edit', id=contact.id)}}">Edit</a> ||
+        <a href="{{url_for('main.delete', id=contact.id)}}">Delete</a>
+      </td>
+    </tr>
+    {% endfor %} {% endif %}
+  </table>
+  <a href="{{url_for('main.add')}}">TAMBAH DATA</a>
+</div>
+{% endblock %}
