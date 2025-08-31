@@ -46,7 +46,15 @@ that will be generate random string with 16 length
 SECRET_KEY = 'your-super-duper-secret-key'
 ```
 
-### 5. Create database
+### 5. Add run.py to env to tell flask which one file to run
+
+```bash
+# .env
+export FLASK_APP = run.py #untuk mac / linux
+set FLASK_APP = run.py #winodws
+```
+
+### 6. Create database
 
 ```bash
 flask shell
