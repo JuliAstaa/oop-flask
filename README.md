@@ -63,3 +63,7 @@ exit()
 ---
 
 <h1 align="center"> HOW TO RUN IT </h1>
+
+```bash
+py run.py
+```
