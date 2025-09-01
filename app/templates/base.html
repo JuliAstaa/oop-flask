@@ -6,7 +6,11 @@
     <title>CONTACT APP</title>
   </head>
   <body>
-    <h1>INI SEBUAH JUDUL</h1>
+    <h1>INI SEBUAH JUDUL KIMAK</h1>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in
+    messages %}
+    <p>{{msg}}</p>
+    {% endfor %} {% endif %} {% endwith %}
     <div>{% block main %} {% endblock %}</div>
     <div>{% block form_add %} {% endblock %}</div>
   </body>
