@@ -4,12 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CONTACT APP</title>
+    <style>
+      .success {
+        color: green;
+      }
+      .failed {
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <h1>INI SEBUAH JUDUL KIMAK</h1>
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in
-    messages %}
-    <p>{{msg}}</p>
+    {% with messages = get_flashed_messages(with_categories=True) %} {% if
+    messages %} {% for category, msg in messages %}
+    <p class="{{category}}">{{msg}}</p>
     {% endfor %} {% endif %} {% endwith %}
     <div>{% block main %} {% endblock %}</div>
     <div>{% block form_add %} {% endblock %}</div>

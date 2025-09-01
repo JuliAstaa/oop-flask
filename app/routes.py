@@ -2,6 +2,7 @@
 from flask import Blueprint, request, redirect, render_template, url_for, flash
 from .models import Contact
 from . import db
+from sqlalchemy.exc import IntegrityError
 
 main = Blueprint('main', __name__)
 
@@ -20,17 +21,27 @@ def add():
         no_hp: str = request.form['no_hp']
         email: str = request.form['email']
 
-        new_user: Contact = Contact(name=nama, no_hp=no_hp, email=email)
+        print(nama, no_hp, email)
 
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            flash("Berhasil menambahkan data")
-            return redirect(url_for('main.index'))
-        except:
-            db.session.rollback()
-            flash("Gagal menambahkan data")
-            return redirect(url_for('main.index'))
+        if not nama or not no_hp or not email:
+            flash("Semua field wajib diisi!!!", "failed")
+            return redirect(url_for('main.add'))
+        else:
+            new_user: Contact = Contact(name=nama, no_hp=no_hp, email=email)
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                flash("Berhasil menambahkan data", "success")
+                return redirect(url_for('main.index'))
+            except IntegrityError:
+                db.session.rollback()
+                flash("Data dengan email / no HP itu sudah ada!", "failed")
+                return redirect(url_for('main.add'))
+            except Exception as e:
+                db.session.rollback()
+                # flash("Gagal menambahkan data", "failed")
+                flash(f"Gagal menambahkan data: {e}", "failed")
+                return redirect(url_for('main.index'))
 
     return render_template("add.html")
 
