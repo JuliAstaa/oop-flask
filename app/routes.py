@@ -18,9 +18,9 @@ def index():
 @main.route("/add", methods=["POST", "GET"])
 def add():
     if request.method == "POST":
-        nama: str = request.form['nama']
-        no_hp: str = request.form['no_hp']
-        email: str = request.form['email']
+        nama: str = request.form['nama'].strip()
+        no_hp: str = request.form['no_hp'].strip()
+        email: str = request.form['email'].strip()
 
         # validator
         errors: list = validate_contact(nama=nama, no_hp=no_hp, email=email)
@@ -54,16 +54,16 @@ def edit(id):
 
     # ubah data
     if request.method == "POST":
-        name: str = request.form['nama']
-        no_hp: str = request.form['no_hp']
-        email: str = request.form['email']
+        name: str = request.form['nama'].strip()
+        no_hp: str = request.form['no_hp'].strip()
+        email: str = request.form['email'].strip()
 
         # validator
-        errors: list = validate_contact(nama=name, no_hp=no_hp, email=email, excluding_id= user.id)
+        errors: list = validate_contact(nama=name, no_hp=no_hp, email=email, exclude_id= user.id)
         if errors:
             for err in errors:
                 flash(err, "failed")
-                return redirect(url_for('main.edit', id = user.id))
+            return redirect(url_for('main.edit', id = user.id))
         else:
 
             user.name = name

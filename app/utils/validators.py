@@ -1,7 +1,7 @@
 import re
 from app.models import Contact
 
-def validate_contact(nama: str, no_hp: str, email: str, excluding_id: int = None) -> list:
+def validate_contact(nama: str, no_hp: str, email: str, exclude_id: int = None) -> list:
     errors: list = []
 
     # cek apakah field kosong
@@ -14,11 +14,11 @@ def validate_contact(nama: str, no_hp: str, email: str, excluding_id: int = None
 
     # cek duplikat
     existing_email = Contact.query.filter_by(email = email).first()
-    if existing_email and existing_email.id != excluding_id:
+    if existing_email and existing_email.id != exclude_id:
         errors.append("Email telah digunakan!")
     
     existing_no_hp = Contact.query.filter_by(no_hp = no_hp).first()
-    if existing_no_hp and existing_no_hp.id != excluding_id:
+    if existing_no_hp and existing_no_hp.id != exclude_id:
         errors.append("No HP telah digunakan!")
 
     return errors
